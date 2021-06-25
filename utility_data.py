@@ -17970,3 +17970,23 @@ using Catch::Detail::Approx;
 #endif // TWOBLUECUBES_SINGLE_INCLUDE_CATCH_HPP_INCLUDED
 
 """
+
+MAKEFILE = """build:
+	$(CXX) $(CPPFLAGS) $(CFLAGS) -std=c++17 basic-project-template/*.cpp -o app
+
+check:
+	$(CXX) $(CPPFLAGS) $(CFLAGS) -std=c++17 *.test.cpp -o test/testapp
+	./test/testapp
+	rm ./test/testapp
+"""
+
+TRAVISCI = """language: cpp
+os:
+  - linux
+  - windows
+  - osx
+compiler:
+  - clang
+  - gcc
+script:
+  - make build && make test"""

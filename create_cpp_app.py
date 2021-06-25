@@ -37,6 +37,18 @@ def create_catch_header_file(project_name):
     with open(os.path.join(os.getcwd(), project_name, "include", "catch2", "catch.hpp"), "w+") as fout:
         fout.write(str(utility_data.CATCH))
 
+def create_makefile(project_name):
+    with open(os.path.join(os.getcwd(), project_name, "Makefile"), "w+") as fout:
+        fout.write(str(utility_data.MAKEFILE))
+
+def create_readme(project_name):
+    with open(os.path.join(os.getcwd(), project_name, "README.md"), "w+") as fout:
+        fout.write(str("# {}".format(project_name)))
+
+def create_travisci_file(project_name):
+    with open(os.path.join(os.getcwd(), project_name, ".travis.yml"), "w+") as fout:
+        fout.write(str(utility_data.TRAVISCI))
+
 if __name__ == "__main__":
     try:
         command = str(sys.argv[1])
@@ -84,8 +96,32 @@ if __name__ == "__main__":
         #########################################
         #   CREATE THE MAKEfile                 #
         #########################################
-        """TODO"""
+        try:
+            create_makefile(project_name)
+            print(colorama.Back.GREEN + "[+] Successfully created the Makefile")
+        except Exception as err:
+            print(colorama.Back.RED + "[-] Error: Failed to create the Makefile. {}".format(str(err).split(":")[0]))
+            sys.exit(-1)
 
+        #########################################
+        #   CREATE THE README.MD FILE           #
+        #########################################
+        try:
+            create_readme(project_name)
+            print(colorama.Back.GREEN + "[+] Successfully created the README.md file")
+        except Exception as err:
+            print(colorama.Back.RED + "[-] Error: Failed to create the README.md file. {}".format(str(err).split(":")[0]))
+            sys.exit(-1)
+
+        #########################################
+        #   CREATE THE TRAVIS CI FILE           #
+        #########################################
+        try:
+            create_travisci_file(project_name)
+            print(colorama.Back.GREEN + "[+] Successfully created the .travis.yml file")
+        except Exception as err:
+            print(colorama.Back.RED + "[-] Error: Failed to create the .travis.yml file. {}".format(str(err).split(":")[0]))
+            sys.exit(-1)
     else:
         print(colorama.Back.RED + "[-] Error: Command '{}' is not valid. Try --help to get a full list of commands".format(command))
         sys.exit(-1)

@@ -17968,30 +17968,42 @@ using Catch::Detail::Approx;
 // end catch_reenable_warnings.h
 // end catch.hpp
 #endif // TWOBLUECUBES_SINGLE_INCLUDE_CATCH_HPP_INCLUDED
-
 """
 
 def get_makefile_data(project_name):
     MAKEFILE = """build:
-        $(CXX) $(CPPFLAGS) $(CFLAGS) -std=c++17 {}/*.cpp -o app
+\tg++ $(CPPFLAGS) $(CFLAGS) {}/*.cpp -o app
 
-    check:
-        $(CXX) $(CPPFLAGS) $(CFLAGS) -std=c++17 test/*.test.cpp -o test/testapp
-        ./test/testapp
-        rm ./test/testapp
-    run:
-        $(CXX) $(CPPFLAGS) $(CFLAGS) -std=c++17 {}/*.cpp -o app
-        ./app
-    """.format(project_name, project_name)
+check:
+\tg++ $(CPPFLAGS) $(CFLAGS) test/*.test.cpp -o test/testapp
+\t./test/testapp
+\trm ./test/testapp
+run:
+\tg++ $(CPPFLAGS) $(CFLAGS) {}/*.cpp -o app
+\t./app""".format(project_name, project_name)
     return MAKEFILE
 
 TRAVISCI = """language: cpp
 os:
   - linux
-  - windows
   - osx
 compiler:
-  - clang
   - gcc
 script:
-  - make build && make test"""
+  - make build && make check"""
+
+MAINCPP = """#include <iostream>
+using namespace std;
+
+int main() {
+    cout << "Hello, World!" << endl;
+
+    return (0);
+}"""
+
+MAINTESTCPP = """#define CATCH_CONFIG_MAIN
+#include "../include/catch2/catch.hpp"
+
+TEST_CASE( "DEFAULT TEST CASE", "[default]" ) {
+    REQUIRE(1 == 1);
+}"""

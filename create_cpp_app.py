@@ -1,6 +1,7 @@
 import os
 import sys
 import colorama
+import requests
 
 import utility_data
 
@@ -8,6 +9,10 @@ import utility_data
     VALID COMMANDS:
         create = creates a new project.
 """
+
+def fetch_catch_file():
+    r = requests.get("https://github.com/philsquared/Catch/releases/download/v1.12.2/catch.hpp", allow_redirects=True)
+    return r.content
 
 def create_empty_directories(project_name):
     os.mkdir(
@@ -34,8 +39,8 @@ def create_gitignore(project_name):
         fout.write(str(utility_data.GITIGNORE))
 
 def create_catch_header_file(project_name):
-    with open(os.path.join(os.getcwd(), project_name, "include", "catch2", "catch.hpp"), "w+") as fout:
-        fout.write(str(utility_data.CATCH))
+    with open(os.path.join(os.getcwd(), project_name, "include", "catch2", "catch.hpp"), "wb+") as fout:
+        fout.write(fetch_catch_file())
 
 def create_makefile(project_name):
     with open(os.path.join(os.getcwd(), project_name, "Makefile"), "w+") as fout:
@@ -48,6 +53,15 @@ def create_readme(project_name):
 def create_travisci_file(project_name):
     with open(os.path.join(os.getcwd(), project_name, ".travis.yml"), "w+") as fout:
         fout.write(str(utility_data.TRAVISCI))
+
+def create_maincpp_file(project_name):
+    with open(os.path.join(os.getcwd(), project_name, project_name, "main.cpp"), "w+") as fout:
+        fout.write(str(utility_data.MAINCPP))
+
+def create_maintestcpp_file(project_name):
+    with open(os.path.join(os.getcwd(), project_name, "test", "main.test.cpp"), "w+") as fout:
+        fout.write(str(utility_data.MAINTESTCPP))
+
 
 if __name__ == "__main__":
     try:
@@ -115,12 +129,33 @@ if __name__ == "__main__":
 
         #########################################
         #   CREATE THE TRAVIS CI FILE           #
-        #########################################
+        ######################################### 
         try:
             create_travisci_file(project_name)
             print(colorama.Back.GREEN + "[+] Successfully created the .travis.yml file")
         except Exception as err:
             print(colorama.Back.RED + "[-] Error: Failed to create the .travis.yml file. {}".format(str(err).split(":")[0]))
+            sys.exit(-1)
+
+        #########################################
+        #   CREATE THE DEFAULT MAIN.CPP FILE    #
+        #########################################
+        try:
+            create_maincpp_file(project_name)
+            print(colorama.Back.GREEN + "[+] Successfully created the main file")
+        except Exception as err:
+            print(colorama.Back.RED + "[-] Error: Failed to create the main file. {}".format(str(err).split(":")[0]))
+            sys.exit(-1)
+
+        #########################################
+        #   CREATE THE DEFAULT MAIN.TEST.CPP    #
+        #   FILE                                #
+        #########################################
+        try:
+            create_maintestcpp_file(project_name)
+            print(colorama.Back.GREEN + "[+] Successfully created the main test file")
+        except Exception as err:
+            print(colorama.Back.RED + "[-] Error: Failed to create the main test file. {}".format(str(err).split(":")[0]))
             sys.exit(-1)
 
         #########################################

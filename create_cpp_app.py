@@ -122,6 +122,20 @@ if __name__ == "__main__":
         except Exception as err:
             print(colorama.Back.RED + "[-] Error: Failed to create the .travis.yml file. {}".format(str(err).split(":")[0]))
             sys.exit(-1)
+
+        #########################################
+        #   INIT THE GIT REPO.                  #
+        #########################################
+        print(colorama.Style.RESET_ALL)
+
+        try:
+            os.chdir(os.path.join(os.getcwd(), project_name))
+            os.system("git init")
+            os.chdir("..")
+            print(colorama.Back.GREEN + "[+] Successfully generated as a Git repository.")
+        except Exception as err:
+            print(colorama.Back.RED + "[-] Error: Failed to generate as Git repository. {}".format(str(err).split(":")[0]))
+            sys.exit(-1)
     else:
         print(colorama.Back.RED + "[-] Error: Command '{}' is not valid. Try --help to get a full list of commands".format(command))
         sys.exit(-1)

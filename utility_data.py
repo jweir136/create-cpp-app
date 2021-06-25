@@ -17979,7 +17979,10 @@ def get_makefile_data(project_name):
         $(CXX) $(CPPFLAGS) $(CFLAGS) -std=c++17 *.test.cpp -o test/testapp
         ./test/testapp
         rm ./test/testapp
-    """.format(project_name)
+    run:
+        $(CXX) $(CPPFLAGS) $(CFLAGS) -std=c++17 {}/*.cpp -o app
+        ./app
+    """.format(project_name, project_name)
     return MAKEFILE
 
 TRAVISCI = """language: cpp

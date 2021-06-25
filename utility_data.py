@@ -30,6 +30,8 @@ GITIGNORE = """# Prerequisites
 *.exe
 *.out
 *.app
+
+*.dSYM/*
 """
 
 CATCH = """/*

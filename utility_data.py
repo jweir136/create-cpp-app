@@ -17976,7 +17976,7 @@ def get_makefile_data(project_name):
         $(CXX) $(CPPFLAGS) $(CFLAGS) -std=c++17 {}/*.cpp -o app
 
     check:
-        $(CXX) $(CPPFLAGS) $(CFLAGS) -std=c++17 *.test.cpp -o test/testapp
+        $(CXX) $(CPPFLAGS) $(CFLAGS) -std=c++17 test/*.test.cpp -o test/testapp
         ./test/testapp
         rm ./test/testapp
     run:

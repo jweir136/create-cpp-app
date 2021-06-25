@@ -1,6 +1,5 @@
 language: python
 os:
-  - windows
   - macos
   - linux
 python:

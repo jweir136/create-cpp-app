@@ -39,7 +39,7 @@ def create_catch_header_file(project_name):
 
 def create_makefile(project_name):
     with open(os.path.join(os.getcwd(), project_name, "Makefile"), "w+") as fout:
-        fout.write(str(utility_data.MAKEFILE))
+        fout.write(str(utility_data.get_makefile_data(project_name)))
 
 def create_readme(project_name):
     with open(os.path.join(os.getcwd(), project_name, "README.md"), "w+") as fout:

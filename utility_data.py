@@ -17971,14 +17971,16 @@ using Catch::Detail::Approx;
 
 """
 
-MAKEFILE = """build:
-	$(CXX) $(CPPFLAGS) $(CFLAGS) -std=c++17 basic-project-template/*.cpp -o app
+def get_makefile_data(project_name):
+    MAKEFILE = """build:
+        $(CXX) $(CPPFLAGS) $(CFLAGS) -std=c++17 {}/*.cpp -o app
 
-check:
-	$(CXX) $(CPPFLAGS) $(CFLAGS) -std=c++17 *.test.cpp -o test/testapp
-	./test/testapp
-	rm ./test/testapp
-"""
+    check:
+        $(CXX) $(CPPFLAGS) $(CFLAGS) -std=c++17 *.test.cpp -o test/testapp
+        ./test/testapp
+        rm ./test/testapp
+    """.format(project_name)
+    return MAKEFILE
 
 TRAVISCI = """language: cpp
 os:

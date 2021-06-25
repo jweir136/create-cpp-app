@@ -39,8 +39,8 @@ def run():
 ######################################################################
 
 def create_valgrind_output_dir(project_name):
-    os.mkdir(os.path.join(os.getcwd(), project_name, "include", "valgrind"))
-    with open(os.path.join(os.getcwd(), project_name, "include", "valgrind", "output.txt"), "w+") as f:
+    os.mkdir(os.path.join(os.getcwd(), project_name, "include", "valgrinddata"))
+    with open(os.path.join(os.getcwd(), project_name, "include", "valgrinddata", "output.txt"), "w+") as f:
         pass
 
 def install_valgrind_files(project_name):

@@ -68,7 +68,6 @@ def create_maintestcpp_file(project_name):
     with open(os.path.join(os.getcwd(), project_name, "test", "main.test.cpp"), "w+") as fout:
         fout.write(str(utility_data.MAINTESTCPP))
 
-
 if __name__ == "__main__":
     try:
         command = str(sys.argv[1])

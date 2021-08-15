@@ -17982,7 +17982,9 @@ check:
 \trm ./test/testapp
 run:
 \tg++ $(CPPFLAGS) $(CFLAGS) -I. {}/*.cpp -o app
-\t./app""".format(project_name, project_name)
+\t./app
+docs:
+\tdoxygen doc/Doxygen""".format(project_name, project_name)
     return MAKEFILE
 
 TRAVISCI = """language: cpp

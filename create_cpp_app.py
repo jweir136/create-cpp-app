@@ -68,6 +68,14 @@ def create_maintestcpp_file(project_name):
     with open(os.path.join(os.getcwd(), project_name, "test", "main.test.cpp"), "w+") as fout:
         fout.write(str(utility_data.MAINTESTCPP))
 
+def fetch_doxygen_file(project_name):
+    r = requests.get("https://raw.githubusercontent.com/jweir136/create-cpp-app/master/templates/Doxygen_Template.txt", allow_redirects=True)
+    return r.content
+
+def create_doxygen_file(project_name):
+    with open(os.path.join(os.getcwd(), project_name, "doc", "Doxygen"), "wb+") as fout:
+        fout.write(fetch_doxygen_file(project_name))
+
 if __name__ == "__main__":
     try:
         command = str(sys.argv[1])
@@ -162,6 +170,16 @@ if __name__ == "__main__":
         except Exception as err:
             print(colorama.Back.RED + "[-] Error: Failed to create the main test file. {}".format(str(err).split(":")[0]))
             sys.exit(-1)
+
+        #########################################
+        #   CREATE THE DOXYGEN FILE             #
+        #########################################
+        try:
+            create_doxygen_file(project_name)
+            print(colorama.Back.GREEN + "[+] Successfully created the Doxygen Config file")
+        except Exception as err:
+            print(colorama.Back.RED + "[-] Error: Failed to create the Doxygen file. {}".format(str(err).split(":")[0])) 
+        
 
         #########################################
         #   INIT THE GIT REPO.                  #
